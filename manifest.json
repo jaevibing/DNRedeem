@@ -1,0 +1,24 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "DNRedeem - PSFaker Redux",
+	"description": "Pretend to redeem Google Play cards.",
+	"version": "0.1",
+	"manifest_version": 3,
+	"content_scripts": [
+		{
+			"matches": [
+				"https://play.google.com/store/paymentmethods",
+				"https://play.google.com/store/games?*code"
+			],
+			"js": ["googlePlay/main.js"],
+			"css": ["googlePlay/main.css"]
+		}
+	],
+	"icons" : {
+		"128": "icon/dnr128.png",
+		"64": "icon/dnr64.png",
+		"32": "icon/dnr32.png",
+		"16": "icon/dnr16.png"
+	}
+}
