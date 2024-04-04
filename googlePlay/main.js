@@ -99,6 +99,12 @@ function censorEmail() {
 }
 
 function genConfirmation() {
+	// Check theres 16 characters in the input.
+	const inputcheck = document.querySelector('input[type="text"][aria-label="Enter gift card or promo code"]');
+    if (inputcheck.value.length !== 16) {
+        return; // Exit the function if the condition isn't met
+    }
+	
 	console.log('hello');
 	const headerElements = getHeaderElements();
 	console.log(headerElements);
@@ -109,12 +115,6 @@ function genConfirmation() {
 		element.innerHTML = newHTML;
 		element.classList.add('lumium-redeem-header-text'); // Make it easier to find in the future
 	}
-
-	// Check theres 16 characters in the input.
-	const inputcheck = document.querySelector('input[type="text"][aria-label="Enter gift card or promo code"]');
-    if (inputcheck.value.length !== 16) {
-        return; // Exit the function if the condition isn't met
-    }
 
 	// Remove the input.
     const input = document.querySelector('input[type="text"][aria-label="Enter gift card or promo code"]').parentElement.parentElement.parentElement.parentElement;
