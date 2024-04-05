@@ -102,7 +102,8 @@ function genConfirmation() {
 	// Check theres 16 characters in the input.
 	const inputcheck = document.querySelector('input[type="text"][aria-label="Enter gift card or promo code"]');
     if (inputcheck.value.length !== 16) {
-        return; // Exit the function if the condition isn't met
+        alert("That code didn't work. Try again. If the code is for a specific app, redeem it in that app. Learn more.");
+		return; // Exit the function if the condition isn't met
     }
 	
 	console.log('hello');
@@ -131,7 +132,7 @@ function genConfirmation() {
     lumiumValueDiv.innerHTML = 'You are about to add $500.00 to your account.';
     
     // Append the lumium-value div to the redeem description
-	element.insertBefore(document.createElement('br'), element.firstChild);
+	element.insertBefore(document.createElement('br'), element.firstChild); // append a break before to add some separation before we append the div
     element.insertBefore(lumiumValueDiv, element.firstChild);
 
     // Update the redeem button.
@@ -145,20 +146,33 @@ function submitGift() {
 	const headerElements = document.querySelectorAll('.lumium-redeem-header-text');
 	for (const element of headerElements) {
 		const currentText = element.innerHTML.split('<div')[0];
-		element.innerHTML = element.innerHTML.replaceAll(currentText, 'Congratulations!');
+		element.innerHTML = element.innerHTML.replaceAll(currentText, 'Processing...');
 	}
 
-	document.querySelector('.lumium-redeem-description-text').innerHTML = '$500.00 has been added to your account.';
+	document.querySelector('.lumium-redeem-description-text').innerHTML = `
+		<div class="loader-container">
+		<div class="loader"></div>
+		<div class="loading">Loading...</div>
+		</div>
+	`;
 
-	const buttonElements = getRedeemButton();
-	for (const element of buttonElements) {
-		element.innerHTML = 'Exit';
-		element.onclick = exitPrompt;
-	}
+	setTimeout(() => {
+		for (const element of headerElements) {
+			const currentText = element.innerHTML.split('<div')[0];
+			element.innerHTML = element.innerHTML.replaceAll(currentText, 'Congratulations!');
+		}
+	
+		document.querySelector('.lumium-redeem-description-text').innerHTML = '<div class="added">$500.00 has been added to your account</div>';
+	
+		const buttonElements = getRedeemButton();
+		for (const element of buttonElements) {
+			element.innerHTML = 'Exit';
+			element.onclick = exitPrompt;
+		}
+	}, 3000);
 }
 
 const exitPrompt = () => window.location = 'https://play.google.com/redeem';
-
 
 // Remove Google Play balance
 function removePlayBalance() {
