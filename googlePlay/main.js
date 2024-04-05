@@ -105,10 +105,30 @@ function genConfirmation() {
         alert("That code didn't work. Try again. If the code is for a specific app, redeem it in that app. Learn more.");
 		return; // Exit the function if the condition isn't met
     }
-	
-	console.log('hello');
+
+	// set gift card value
+	const lastTwoChars = document.querySelector('input[type="text"][aria-label="Enter gift card or promo code"]').value.slice(-2);
+
+	const dictionary = {
+		'25': '250',
+		'20': '200',
+		'10': '100',
+		'05': '50',
+		'02': '20',
+	};
+
+	let amount;
+
+	if (dictionary.hasOwnProperty(lastTwoChars)){
+		amount = dictionary[lastTwoChars];
+	}
+	else {
+		amount = '500';
+	}
+	console.log(amount);
+	// end that
+
 	const headerElements = getHeaderElements();
-	console.log(headerElements);
 
 	for (const element of headerElements) {
 		const headerText = element.innerHTML.split('<div')[0];
@@ -129,7 +149,7 @@ function genConfirmation() {
     // Create the lumium-value div for the additional text
     const lumiumValueDiv = document.createElement('div');
     lumiumValueDiv.classList.add('lumium-value');
-    lumiumValueDiv.innerHTML = 'You are about to add $500.00 to your account.';
+    lumiumValueDiv.innerHTML = `You are about to add $${amount}.00 to your account.`;
     
     // Append the lumium-value div to the redeem description
 	element.insertBefore(document.createElement('br'), element.firstChild); // append a break before to add some separation before we append the div
@@ -137,12 +157,19 @@ function genConfirmation() {
 
     // Update the redeem button.
     const buttonElements = getRedeemButton();
-    for (const element of buttonElements) {
+    /*for (const element of buttonElements) {
         element.onclick = submitGift;
-    }
+    }*/
+	for (const element of buttonElements) {
+		element.onclick = (function(param) {
+			return function(event) {
+				submitGift(amount);
+			};
+		})(amount);
+	}
 }
 
-function submitGift() {
+function submitGift(amount) {
 	const headerElements = document.querySelectorAll('.lumium-redeem-header-text');
 	for (const element of headerElements) {
 		const currentText = element.innerHTML.split('<div')[0];
@@ -161,8 +188,13 @@ function submitGift() {
 			const currentText = element.innerHTML.split('<div')[0];
 			element.innerHTML = element.innerHTML.replaceAll(currentText, 'Congratulations!');
 		}
-	
-		document.querySelector('.lumium-redeem-description-text').innerHTML = '<div class="added">$500.00 has been added to your account</div>';
+
+		const addedDiv = document.createElement('div');
+		addedDiv.classList.add('added');
+		addedDiv.textContent = `$${amount}.00 has been added to your account`
+
+		document.querySelector('.lumium-redeem-description-text').innerHTML = ``;
+		document.querySelector('.lumium-redeem-description-text').appendChild(addedDiv);
 	
 		const buttonElements = getRedeemButton();
 		for (const element of buttonElements) {

@@ -16,9 +16,9 @@
 		}
 	],
 	"icons" : {
-		"128": "icon/dnr128.png",
-		"64": "icon/dnr64.png",
-		"32": "icon/dnr32.png",
-		"16": "icon/dnr16.png"
+		"128": "icon/normal/dnr128.png",
+		"64": "icon/normal/dnr64.png",
+		"32": "icon/normal/dnr32.png",
+		"16": "icon/normal/dnr16.png"
 	}
 }
