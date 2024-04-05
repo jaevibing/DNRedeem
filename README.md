@@ -13,7 +13,7 @@ Google Chrome
 2. Choose your version, either normal or stealth (stealth disguises the extension as an adblocker, normal does not)
 3. Once chosen, download it by clicking it
 4. Once downloaded, unzip the file.
-5. Next, go to your [extensions settings](chrome://extensions).
+5. Next, go to your [extensions settings](chrome://extensions) (chrome://extensions).
 6. Turn on developer mode by pressing the switch in the top right
 7. Press the button "Load Unpacked"
 8. Select the unzipped folder
